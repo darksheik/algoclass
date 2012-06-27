@@ -7,10 +7,10 @@ def partition(arr,start,final)
 	  puts "Considering start through final:  " + arr[start..final].to_s
 
     puts "Pivot #{i}"
-    while (j <= final) 
+    while (j <= final)
       puts "Comparing #{arr[j]} < #{arr[start]}"
       if arr[j] && (arr[j] < arr[start])
-        arr[i+1,j] = arr[j,i+1]
+        arr[i+1], arr[j] = arr[j], arr[i+1]
         i += 1
         j += 1
       else
@@ -18,14 +18,14 @@ def partition(arr,start,final)
       end
       puts arr.to_s
     end
-  
+
     puts "Moving pivot to #{i}"
-    arr[start,i] = arr[i,start]
+    arr[start], arr[i] = arr[i], arr[start]
     puts arr.to_s
 
-    puts "Recursion small set $start " + (i-1).to_s
+    puts "Recursion small set " + (i-1).to_s
     partition(arr,start,i-1)
-    puts "Recursion large set " + (i+1).to_s + " final:" 
+    puts "Recursion large set " + (i+1).to_s
     partition(arr,i+1,final)
     return start
   end
