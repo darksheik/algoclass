@@ -1,6 +1,13 @@
+def choosepivot(choosearray)
+  500
+end
 def partition(arr,start,final)
 
-  puts start
+  @comparisons += final-start-1
+  number = choosepivot(arr[start..final])
+  arr[number], arr[0] = arr[0], arr[number]
+  #arr[0]
+  #puts start
   i = start.to_i
   j = i+1
 
@@ -21,8 +28,9 @@ def partition(arr,start,final)
   end
 end
 
+@comparisons = 0
 @master_array = []
 File.open(ARGV[0]).each_line{ |l| @master_array << l.to_i }
-pivot = ARGV[1].to_i
-partition(@master_array,pivot,@master_array.length-1)
+partition(@master_array,0,@master_array.length-1)
 puts @master_array.to_s
+puts "Comparisons: " + @comparisons.to_s
