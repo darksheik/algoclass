@@ -11,20 +11,19 @@ def partition(arr,start,final)
   i = start.to_i
   j = i+1
 
-  if(final-start >= 1)
-    while (j <= final)
-      if arr[j] && (arr[j] < arr[start])
+  if arr.length > 1
+    while (j < arr.length)
+      if arr[j] && (arr[j] < arr[i+1])
         arr[i+1], arr[j] = arr[j], arr[i+1]
         i += 1
       end
       j += 1
     end
 
-    arr[start], arr[i] = arr[i], arr[start]
+    arr[pivot], arr[i] = arr[i], arr[pivot]
 
-    partition(arr,start,i-1)
-    partition(arr,i+1,final)
-    return start
+    partition(arr[0..i-1],pivot)
+    partition(arr[i+1..arr.length],pivot)
   end
 end
 
