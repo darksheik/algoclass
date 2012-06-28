@@ -1,28 +1,29 @@
-def partition(arr,start,final)
+def partition(arr,pivot)
 
-  puts start
-  i = start.to_i
+  @comparisons += arr.length-1
+  i = pivot.to_i
   j = i+1
 
-  if(final-start >= 1)
-    while (j <= final)
-      if arr[j] && (arr[j] < arr[start])
+  if arr.length > 1
+    while (j < arr.length)
+      if arr[j] && (arr[j] < arr[i+1])
         arr[i+1], arr[j] = arr[j], arr[i+1]
         i += 1
       end
       j += 1
     end
 
-    arr[start], arr[i] = arr[i], arr[start]
+    arr[pivot], arr[i] = arr[i], arr[pivot]
 
-    partition(arr,start,i-1)
-    partition(arr,i+1,final)
-    return start
+    partition(arr[0..i-1],pivot)
+    partition(arr[i+1..arr.length],pivot)
   end
 end
 
+@comparisons = 0
 @master_array = []
 File.open(ARGV[0]).each_line{ |l| @master_array << l.to_i }
 pivot = ARGV[1].to_i
-partition(@master_array,pivot,@master_array.length-1)
-puts @master_array.to_s
+partition(@master_array,pivot)
+puts "Final Array: " + @master_array.to_s
+puts "Total Comparisons: " + @comparisons.to_s
