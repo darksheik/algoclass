@@ -1,3 +1,7 @@
+include Process
+s = getrlimit RLIMIT_STACK
+puts s.to_s
+
 @master_hash = Hash.new
 @reverse_hash = Hash.new
 
@@ -7,6 +11,8 @@
 @tproc = 0
 @fin = Hash.new
 @leaders = Hash.new
+
+@stack = 0
 
 def dfs_reverse_loop(g)
   (@totalnodes).downto(1).each { |i|
@@ -31,6 +37,8 @@ def dfs_loop(g)
 end
 
 def dfs(g,i,l)
+  @stack += 1
+  puts @stack.to_s
   @seen[i] = i
   this_node = g[i]
   if this_node
@@ -50,6 +58,7 @@ def dfs(g,i,l)
     end  
     #puts "Finishing time for node " + i.to_s + " = " + @tproc.to_s
   end
+  @stack -= 1
 end
 
 File.open(ARGV[0]).each_line{ |l|
@@ -65,11 +74,12 @@ File.open(ARGV[0]).each_line{ |l|
 #puts @master_hash.to_s
 #puts @reverse_hash.to_s
 
+puts "Starting first loop"
 @totalnodes = @master_hash.length
 dfs_loop(@master_hash)
 @seen = Array.new
 @tproc = 0
-#puts "Starting Reverse loop " + @reverse_hash.to_s
+puts "Starting Reverse loop"
 dfs_reverse_loop(@reverse_hash)
 
 
