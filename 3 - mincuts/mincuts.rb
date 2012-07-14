@@ -1,3 +1,7 @@
+# Karger's "Minimum Cut" algorithm
+# Note - this algorithm isn't always "correct" in that it may not find the smallest minimum cut
+# on an individual run, but repeated trials (say, 100 or so) should be enough to get the correct answer.
+
 @master_hash = Hash.new
 
 def deep_copy(o)

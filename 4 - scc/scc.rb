@@ -1,3 +1,5 @@
+# This algorithm finds the five largest "strongly connected components" in a directed graph
+
 include Process
 s = getrlimit RLIMIT_STACK
 puts s.to_s

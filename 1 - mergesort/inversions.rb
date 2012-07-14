@@ -1,3 +1,6 @@
+# Merge sort is a "divide and conquer" algorithm that breaks a list in two recursively
+# and finally swaps the elements at the lowest level, which are then ordered when the
+# recursion bubbles back up to the top.
 
 class Inversion
   attr_accessor :master_array

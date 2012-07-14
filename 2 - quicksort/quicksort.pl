@@ -1,5 +1,13 @@
 #!/usr/local/bin/perl
 
+# Quicksort is a "divide and conquer" algorithm that breaks an array into pieces recursively
+# and reassembles them in the correct order.
+
+# Runtime is highly dependent on your choice of "pivot", that is, on each iteration a number will
+# be chosen to compare all other numbers against, and the two halves on either side of the pivot
+# (which are higher and lower than the pivot after the routine completes)
+# will be passed to a deeper recursion.
+
 open(FILE,$ARGV[0]);
 while ($line = <FILE>) {
 	chomp($line);
