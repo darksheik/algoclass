@@ -8,31 +8,38 @@
 @b = Hash.new
 @startvertex = ARGV[1]
 @x = [@startvertex]  # Should be the start vertex.  Will add more as we explore
-@a[@startvertex] = 0
 @b[@startvertex] = []  # Not actually necessary for algorithm, just for understanding
 
 def loop
-  while @master_hash.keys.length - @x.length > 0
-    puts "Working on vertex " + @x.last.to_s + " Master length " + @master_hash.keys.length.to_s + " x length " + @x.length.to_s
-    #puts @master_hash[@x.last].to_s
-    shortest = 1000000
-    shortestvertex = nil
-    explorevertex = @x.last
-    @master_hash[explorevertex].each { |vertex|
-    	target,edgelength = vertex.split(',')
-    	if !@x.include?(target)
-    	#puts "Target " + target.to_s + " Edgelength " + edgelength.to_s
-    	if edgelength.to_i < shortest.to_i
-    		shortest = edgelength.to_i
-    		shortestvertex = target
-    	end
-    	#puts "Shortest so far is vertex " + shortestvertex.to_s + " with " + shortest.to_s
-    end
+  #  Set each distance to "infinity"
+  @master_hash.keys.each { |k| @a[k] = 1000000 }
+  @a[@startvertex] = 0
+  while (@master_hash.keys - @x).length > 0 || @notdone == true
+    @notdone = false
+    @x.each { |explorevertex|
+   	  #puts
+   	  #puts "***Explorevertex = " + explorevertex.to_s + " @a[explorevertex] = " + @a[explorevertex].to_s 
+   	  #puts @master_hash[explorevertex].to_s
+   	  sorthash = Hash.new
+      toexplore = Array.new
+      @master_hash[explorevertex].each { |vertex|
+    	  target,edgelength = vertex.split(',')
+      	sorthash[target] = edgelength.to_i
+      }
+    	toexplore = sorthash.sort_by {|key, value| value}
+    	#puts "Toexplore " + toexplore.to_s
+      toexplore.each { |vertex|
+    	  target,edgelength = vertex[0],vertex[1]
+    	  #puts "Target: " + target + " @a[target] = " + @a[target].to_s + " Edgelength = " + edgelength.to_s
+   	    #puts "Equation " + (@a[explorevertex].to_i + edgelength.to_i).to_s + " < " + @a[target].to_s
+   	    if  @a[explorevertex].to_i + edgelength.to_i < @a[target]
+          @a[target] = @a[explorevertex].to_i + edgelength.to_i
+          #puts "Set vertex " + target + " to " + @a[target].to_s
+          @notdone = true  # If anything has been reset, we should evaluate the entire tree again
+        end
+        @x.push target if !@x.include?(target)
+      }
     }
-    puts "Final shortest is vertex " + shortestvertex.to_s + " with " + shortest.to_s
-    @a[shortestvertex] = @a[@x.last].to_i + shortest.to_i
-    #puts @a.to_s
-    @x.push shortestvertex if shortestvertex
   end
 end
 
