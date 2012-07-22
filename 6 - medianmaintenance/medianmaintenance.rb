@@ -20,24 +20,24 @@ File.open(ARGV[0]).each_line{ |l|
   else
     @highheap.push newkey, newkey
   end
-  if @lowheap.size > @highheap.size
+  if @lowheap.size > @highheap.size + 1
     fromlow = @lowheap.pop
     puts "Moving low to high: " + fromlow.to_s
     @highheap.push fromlow
   end
-  if @highheap.size > @lowheap.size + 1
+  if @highheap.size > @lowheap.size && @highheap.size > 1
     fromhigh = @highheap.pop
     puts "Moving high to low: " + fromhigh.to_s
     @lowheap.push fromhigh
   end
   puts "Low heap: " +  @lowheap.next_key.to_s + " Size: " + @lowheap.size.to_s
   puts "High heap: " + @highheap.next_key.to_s + " Size: " + @highheap.size.to_s
-  median = @highheap.next_key.nil? ? @lowheap.next_key : @highheap.next_key
+  median = @lowheap.next_key.nil? ? @highheap.next_key : @lowheap.next_key
   #puts "Array " + @debug.sort.to_s
   puts "Selected median= " + median.to_s
   @running_total += median
   puts "Running total: " + @running_total.to_s
 }
 
-puts "Debug: " + @debug.sort.to_s
+#puts "Debug: " + @debug.to_s
 puts "Final output: " + (@running_total % 10000).to_s
