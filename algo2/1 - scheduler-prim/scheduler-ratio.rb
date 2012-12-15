@@ -13,7 +13,8 @@ f.each { |line|
   data << [splitdata[0].to_i,splitdata[1].to_i]
 }
 
-sorted = data.sort_by{|e| -(e[0].to_f / e[1].to_f) }
+#sorted = data.sort_by{|e| -(e[0].to_f / e[1].to_f) }
+sorted = data.sort_by{|e| -(e[1].to_f / e[0].to_f) }
 
 running_completion_time = 0
 weighted_sum_of_completion_times = 0
@@ -21,6 +22,6 @@ weighted_sum_of_completion_times = 0
 sorted.each { |i|
   puts i[0].to_s + ' ' + i[1].to_s + ' ' + (i[0].to_f / i[1].to_f).to_s
   running_completion_time += i[1]
-  weighted_sum_of_completion_times += (i[0] * i[1])
+  weighted_sum_of_completion_times += (i[0] * running_completion_time)
   puts "r: " + running_completion_time.to_s + " w: " + weighted_sum_of_completion_times.to_s
 }
